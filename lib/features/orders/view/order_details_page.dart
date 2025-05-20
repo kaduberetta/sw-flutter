@@ -12,6 +12,15 @@ class OrderDetailsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: DefaultAppBar(title: order),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(Spacing.x2),
+        child: PrimaryButton(
+          label: 'Finalizar Pedido',
+          onPressed: () {
+            // TODO: Implementar ação de finalizar pedido
+          },
+        ),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(Spacing.x2),
@@ -27,15 +36,6 @@ class OrderDetailsPage extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(Spacing.x2),
-        child: PrimaryButton(
-          label: 'Finalizar Pedido',
-          onPressed: () {
-            // TODO: Implementar ação de finalizar pedido
-          },
         ),
       ),
     );

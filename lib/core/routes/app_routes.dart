@@ -18,7 +18,7 @@ final GoRouter appRouter = GoRouter(
         return OrderDetailsPage(order: order);
       },
     ),
-    GoRoute(path: RouteConstants.createOrder, builder: (context, state) => const CreateOrderPage()),
+    GoRoute(path: RouteConstants.createOrder, builder: (context, state) => CreateOrderPage()),
   ],
   errorBuilder: (context, state) => const NotFoundPage(),
 );

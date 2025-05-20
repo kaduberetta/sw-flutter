@@ -75,7 +75,7 @@ class _LoginPageContentState extends State<_LoginPageContent> {
                     label: 'Entrar',
                     isLoading: provider.isLoading,
                     // onPressed: provider.login,
-                    onPressed: () => context.push(RouteConstants.listOrders),
+                    onPressed: () => context.pushReplacement(RouteConstants.listOrders),
                   ),
                 ],
               ),

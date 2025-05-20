@@ -20,9 +20,7 @@ class ListOrdersPage extends StatelessWidget {
               PrimaryButton(
                 label: 'Novo Pedido',
                 prefixIcon: Icons.add,
-                onPressed: () {
-                  // TODO: Implementar ação de novo pedido
-                },
+                onPressed: () => context.push(RouteConstants.createOrder),
               ),
               const SizedBox(height: Spacing.x2),
               Expanded(
