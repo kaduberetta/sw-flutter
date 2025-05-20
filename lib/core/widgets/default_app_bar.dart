@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sw_flutter_carlos/core/constants/color.dart';
 import 'package:sw_flutter_carlos/core/constants/text_style.dart';
 
@@ -16,7 +17,13 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       backgroundColor: ColorPalette.primary,
       elevation: 2,
-      leading: leading,
+      leading:
+          context.canPop()
+              ? IconButton(
+                onPressed: context.pop,
+                icon: Icon(Icons.chevron_left, size: 24, color: Colors.white),
+              )
+              : SizedBox(),
       actions: actions,
     );
   }
