@@ -1,5 +1,4 @@
 class RouteConstants {
-  static const String home = '/';
   static const String login = '/login';
   static const String listOrders = '/orders';
   static const String createOrder = '/orders/create';

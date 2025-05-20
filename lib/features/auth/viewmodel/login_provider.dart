@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:sw_flutter_carlos/core/config/status_notifier.dart';
+import 'package:sw_flutter_carlos/core/exceptions/api_exception.dart';
+import 'package:sw_flutter_carlos/features/auth/service/auth_service.dart';
+
+class LoginProvider extends ChangeNotifier with StatusNotifier {
+  String _email = '';
+  String _password = '';
+  bool _obscurePassword = true;
+  final AuthService _authService = AuthService();
+
+  String get email => _email;
+  String get password => _password;
+  bool get obscurePassword => _obscurePassword;
+
+  void setEmail(String value) {
+    _email = value;
+    notifyListeners();
+  }
+
+  void setPassword(String value) {
+    _password = value;
+    notifyListeners();
+  }
+
+  void toggleObscurePassword() {
+    _obscurePassword = !_obscurePassword;
+    notifyListeners();
+  }
+
+  Future<void> login() async {
+    setLoading();
+    try {
+      final success = await _authService.login(_email, _password);
+      if (success) {
+        setSuccess();
+      } else {
+        setError('Credenciais inválidas');
+      }
+    } on ApiException catch (e) {
+      setError(e.message);
+    } catch (e) {
+      setError('Erro inesperado: ${e.toString()}');
+    }
+  }
+}

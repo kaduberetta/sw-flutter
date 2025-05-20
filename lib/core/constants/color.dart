@@ -4,8 +4,10 @@ class ColorPalette {
   static bool get isDarkMode => false;
 
   static Color get background => isDarkMode ? DarkPalette.background : LightPalette.background;
-  static Color get backgroundLight => isDarkMode ? DarkPalette.backgroundLight : LightPalette.backgroundLight;
-  static Color get backgroundDark => isDarkMode ? DarkPalette.backgroundDark : LightPalette.backgroundDark;
+  static Color get backgroundLight =>
+      isDarkMode ? DarkPalette.backgroundLight : LightPalette.backgroundLight;
+  static Color get backgroundDark =>
+      isDarkMode ? DarkPalette.backgroundDark : LightPalette.backgroundDark;
 
   static Color get border => isDarkMode ? DarkPalette.border : LightPalette.border;
 
@@ -20,7 +22,8 @@ class ColorPalette {
   static Color get info => isDarkMode ? DarkPalette.info : LightPalette.info;
 
   static Color get text => isDarkMode ? DarkPalette.text : LightPalette.text;
-  static Color get textContrast => isDarkMode ? DarkPalette.textContrast : LightPalette.textContrast;
+  static Color get textContrast =>
+      isDarkMode ? DarkPalette.textContrast : LightPalette.textContrast;
 }
 
 class LightPalette {
@@ -32,8 +35,8 @@ class LightPalette {
 
   static const Color disabled = Color(0XFFD1D1D1);
 
-  static const Color primary = Color(0XFF15234F);
-  static const Color secondary = Color(0XFF007BFF);
+  static const Color primary = Color(0XFF46068E);
+  static const Color secondary = Color(0XFFFD3269);
 
   static const Color warning = Color(0XFFE5D549);
   static const Color success = Color(0XFF51BF47);
