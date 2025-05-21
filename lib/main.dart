@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:sw_flutter_carlos/core/routes/app_routes.dart';
+import 'package:sw_flutter_carlos/core/routes/route_constants.dart';
 import 'package:sw_flutter_carlos/service_locator.dart';
+import 'package:sw_flutter_carlos/core/config/auth_manager.dart';
+import 'package:sw_flutter_carlos/features/auth/viewmodel/login_provider.dart';
+import 'package:sw_flutter_carlos/features/orders/viewmodel/list_orders_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,10 +21,19 @@ class SwApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'SW Flutter - Carlos Beretta',
-      routerConfig: appRouter,
-      debugShowCheckedModeBanner: false,
+    AuthManager.onLogout = () {
+      context.pushReplacement(RouteConstants.login);
+    };
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<LoginProvider>.value(value: sl<LoginProvider>()),
+        ChangeNotifierProvider<ListOrdersProvider>.value(value: sl<ListOrdersProvider>()),
+      ],
+      child: MaterialApp.router(
+        title: 'SW Flutter - Carlos Beretta',
+        routerConfig: appRouter,
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

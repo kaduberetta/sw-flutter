@@ -28,6 +28,10 @@ class AuthService {
   }
 
   Future<void> logout() async {
+    final refreshToken = await _storage.read(key: 'refresh_token');
+    if (refreshToken != null) {
+      await _api.revokeToken(refreshToken);
+    }
     await _storage.deleteAll();
   }
 

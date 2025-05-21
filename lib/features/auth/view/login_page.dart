@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:sw_flutter_carlos/core/config/status_notifier.dart';
 import 'package:sw_flutter_carlos/core/constants/consts.dart';
-import 'package:sw_flutter_carlos/core/routes/route_constants.dart';
 import 'package:sw_flutter_carlos/core/widgets/default_snack_bar.dart';
 import 'package:sw_flutter_carlos/core/widgets/default_text_field.dart';
 import 'package:sw_flutter_carlos/core/widgets/widgets.dart';
@@ -14,31 +11,16 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(create: (_) => LoginProvider(), child: _LoginPageContent());
-  }
-}
-
-class _LoginPageContent extends StatefulWidget {
-  @override
-  State<_LoginPageContent> createState() => _LoginPageContentState();
-}
-
-class _LoginPageContentState extends State<_LoginPageContent> {
-  ProviderStatus? _previousStatus;
-
-  @override
-  Widget build(BuildContext context) {
     return Consumer<LoginProvider>(
       builder: (context, provider, _) {
-        if (_previousStatus != provider.status) {
-          if (provider.hasError && provider.errorMessage != null) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(DefaultSnackBar.error(message: provider.errorMessage!));
-            });
-          }
-          _previousStatus = provider.status;
+        if (provider.hasError) {
+          // if (provider.hasError && provider.errorMessage != null) {
+          //   WidgetsBinding.instance.addPostFrameCallback((_) {
+          //     ScaffoldMessenger.of(
+          //       context,
+          //     ).showSnackBar(DefaultSnackBar.error(message: provider.errorMessage!));
+          //   });
+          // }
         }
         return Scaffold(
           backgroundColor: ColorPalette.primary,
@@ -74,8 +56,7 @@ class _LoginPageContentState extends State<_LoginPageContent> {
                   PrimaryButton(
                     label: 'Entrar',
                     isLoading: provider.isLoading,
-                    // onPressed: provider.login,
-                    onPressed: () => context.pushReplacement(RouteConstants.listOrders),
+                    onPressed: () => provider.login(context),
                   ),
                 ],
               ),

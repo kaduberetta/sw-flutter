@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sw_flutter_carlos/core/config/status_notifier.dart';
 import 'package:sw_flutter_carlos/core/exceptions/api_exception.dart';
+import 'package:sw_flutter_carlos/core/routes/route_constants.dart';
 import 'package:sw_flutter_carlos/features/auth/service/auth_service.dart';
 
 class LoginProvider extends ChangeNotifier with StatusNotifier {
@@ -28,11 +30,14 @@ class LoginProvider extends ChangeNotifier with StatusNotifier {
     notifyListeners();
   }
 
-  Future<void> login() async {
+  Future<void> login(BuildContext context) async {
     setLoading();
     try {
       final success = await _authService.login(_email, _password);
       if (success) {
+        if (context.mounted) {
+          context.pushReplacement(RouteConstants.listOrders);
+        }
         setSuccess();
       } else {
         setError('Credenciais inválidas');
