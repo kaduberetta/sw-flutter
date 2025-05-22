@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum ProviderStatus { idle, loading, success, error }
+enum ProviderStatus { idle, loading, success, error, expired }
 
 mixin StatusNotifier on ChangeNotifier {
   ProviderStatus _status = ProviderStatus.idle;
@@ -34,6 +34,12 @@ mixin StatusNotifier on ChangeNotifier {
   void setIdle() {
     _status = ProviderStatus.idle;
     _errorMessage = null;
+    notifyListeners();
+  }
+
+  void setExpired() {
+    _status = ProviderStatus.expired;
+    _errorMessage = 'Sessão expirada. Faça login novamente.';
     notifyListeners();
   }
 }

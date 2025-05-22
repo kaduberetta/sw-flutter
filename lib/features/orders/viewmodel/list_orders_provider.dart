@@ -11,6 +11,8 @@ class ListOrdersProvider extends ChangeNotifier with StatusNotifier {
   final OrdersService _ordersService;
   List<OrderModel> _orders = [];
   List<OrderModel> get orders => _orders;
+  List<OrderModel> get pendingOrders => _orders.where((o) => !o.finished).toList();
+  List<OrderModel> get finishedOrders => _orders.where((o) => o.finished).toList();
 
   Future<void> fetchOrders() async {
     setLoading();

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:sw_flutter_carlos/core/constants/consts.dart';
 import 'package:sw_flutter_carlos/features/auth/viewmodel/login_provider.dart';
-import 'package:sw_flutter_carlos/service_locator.dart';
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -28,18 +28,37 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions:
           showLoggoutButton
               ? [
-                Padding(
-                  padding: const EdgeInsets.only(right: Spacing.x2),
-                  child: TextButton(
-                    onPressed: () => sl<LoginProvider>().logout(context),
-                    child: Row(
-                      children: [
-                        Icon(Icons.logout, color: Colors.white),
-                        const SizedBox(width: Spacing.x1),
-                        Text('Sair', style: AppTextStyle.body(color: Colors.white)),
-                      ],
-                    ),
-                  ),
+                Consumer<LoginProvider>(
+                  builder: (context, provider, _) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: Spacing.x2),
+                      child: TextButton(
+                        onPressed:
+                            provider.isLoading
+                                ? null
+                                : () async {
+                                  await provider.logout();
+                                },
+                        child: Row(
+                          children: [
+                            Icon(Icons.logout, color: Colors.white),
+                            const SizedBox(width: Spacing.x1),
+                            provider.isLoading
+                                ? Container(
+                                  width: 16,
+                                  height: 16,
+                                  margin: const EdgeInsets.symmetric(horizontal: 6.2),
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                                : Text('Sair', style: AppTextStyle.body(color: Colors.white)),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ]
               : null,

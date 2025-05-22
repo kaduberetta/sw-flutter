@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:sw_flutter_carlos/features/auth/viewmodel/login_provider.dart';
+import 'package:sw_flutter_carlos/features/orders/viewmodel/create_order_provider.dart';
 import 'package:sw_flutter_carlos/features/orders/viewmodel/list_orders_provider.dart';
 import 'package:sw_flutter_carlos/features/orders/viewmodel/order_details_provider.dart';
 import 'package:sw_flutter_carlos/features/auth/service/auth_service.dart';
@@ -12,6 +13,7 @@ Future<void> configureDependencies() async {
   sl.registerLazySingleton<OrdersService>(() => OrdersService());
   sl.registerSingleton<LoginProvider>(LoginProvider(sl<AuthService>()));
   sl.registerSingleton<ListOrdersProvider>(ListOrdersProvider(sl<OrdersService>()));
+  sl.registerFactory<CreateOrderProvider>(() => CreateOrderProvider(sl<OrdersService>()));
   sl.registerFactory<OrderDetailsProvider>(() => OrderDetailsProvider(sl<OrdersService>()));
   await sl.allReady();
 }

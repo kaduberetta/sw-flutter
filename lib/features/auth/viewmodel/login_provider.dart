@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sw_flutter_carlos/core/config/auth_manager.dart';
 import 'package:sw_flutter_carlos/core/config/status_notifier.dart';
 import 'package:sw_flutter_carlos/core/routes/route_constants.dart';
 import 'package:sw_flutter_carlos/features/auth/service/auth_service.dart';
@@ -16,6 +15,8 @@ class LoginProvider extends ChangeNotifier with StatusNotifier {
   String get email => _email;
   String get password => _password;
   bool get obscurePassword => _obscurePassword;
+
+  final ValueNotifier<bool> isAuthenticated = ValueNotifier(true);
 
   void setEmail(String value) {
     _email = value;
@@ -38,8 +39,9 @@ class LoginProvider extends ChangeNotifier with StatusNotifier {
       final success = await _authService.login(_email, _password);
       if (success) {
         if (context.mounted) {
-          context.pushReplacement(RouteConstants.listOrders);
+          context.go(RouteConstants.listOrders);
         }
+        isAuthenticated.value = true;
         setSuccess();
         return true;
       } else {
@@ -52,12 +54,13 @@ class LoginProvider extends ChangeNotifier with StatusNotifier {
     }
   }
 
-  Future<void> logout(BuildContext context) async {
+  Future<void> logout() async {
     setLoading();
     try {
+      await Future.delayed(Duration(seconds: 1));
       await _authService.logout();
+      isAuthenticated.value = false;
       setSuccess();
-      AuthManager.onLogout?.call();
     } catch (e) {
       setError('Erro ao sair: ${e.toString()}');
     }

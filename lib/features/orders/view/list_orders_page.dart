@@ -13,39 +13,54 @@ class ListOrdersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const DefaultAppBar(title: 'Meus Pedidos', showLoggoutButton: true),
-      body: SafeArea(
-        child: Consumer<ListOrdersProvider>(
-          builder: (context, provider, _) {
-            if (provider.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return Padding(
-              padding: const EdgeInsets.all(Spacing.x2),
-              child: Column(
-                children: [
-                  PrimaryButton(
-                    label: 'Novo Pedido',
-                    prefixIcon: Icons.add,
-                    onPressed: () => context.push(RouteConstants.createOrder),
-                  ),
-                  const SizedBox(height: Spacing.x2),
-                  Expanded(
-                    child: RefreshIndicator(
-                      onRefresh: provider.fetchOrders,
-                      child: ListView.separated(
-                        itemCount: provider.orders.length,
-                        padding: EdgeInsets.zero,
-                        separatorBuilder: (context, index) => SizedBox(height: Spacing.x1),
-                        itemBuilder: (context, index) => OrderCard(order: provider.orders[index]),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: DefaultAppBar(title: 'Meus Pedidos', showLoggoutButton: true),
+        body: SafeArea(
+          child: Consumer<ListOrdersProvider>(
+            builder: (context, provider, _) {
+              if (provider.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return Padding(
+                padding: const EdgeInsets.all(Spacing.x2),
+                child: Column(
+                  children: [
+                    PrimaryButton(
+                      label: 'Novo Pedido',
+                      prefixIcon: Icons.add,
+                      onPressed: () => context.push(RouteConstants.createOrder),
+                    ),
+                    const SizedBox(height: Spacing.x2),
+                    const TabBar(tabs: [Tab(text: 'Pendentes'), Tab(text: 'Finalizados')]),
+                    Expanded(
+                      child: TabBarView(
+                        children: [
+                          ListView.separated(
+                            itemCount: provider.pendingOrders.length,
+                            padding: EdgeInsets.only(top: Spacing.x2),
+                            separatorBuilder: (context, index) => SizedBox(height: Spacing.x1),
+                            itemBuilder: (context, index) {
+                              return OrderCard(order: provider.pendingOrders[index]);
+                            },
+                          ),
+                          ListView.separated(
+                            itemCount: provider.finishedOrders.length,
+                            padding: EdgeInsets.only(top: Spacing.x2),
+                            separatorBuilder: (context, index) => SizedBox(height: Spacing.x1),
+                            itemBuilder: (context, index) {
+                              return OrderCard(order: provider.finishedOrders[index]);
+                            },
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

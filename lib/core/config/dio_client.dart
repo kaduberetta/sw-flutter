@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:sw_flutter_carlos/core/config/auth_manager.dart';
 import 'package:sw_flutter_carlos/features/auth/service/auth_service.dart';
+import 'package:sw_flutter_carlos/features/auth/viewmodel/login_provider.dart';
 import 'package:sw_flutter_carlos/service_locator.dart';
 
 class DioClient {
@@ -25,7 +27,7 @@ class DioClient {
         },
 
         onError: (DioException e, ErrorInterceptorHandler handler) async {
-          if (e.response?.statusCode == 401) {
+          if (e.response?.statusCode == HttpStatus.unauthorized) {
             // Try refresh token
             final refreshed = await _authService.refreshAccessToken();
             if (refreshed) {
@@ -40,8 +42,7 @@ class DioClient {
               }
             } else {
               // Refresh token failed: user needs to log in again
-              await _authService.logout();
-              AuthManager.onLogout?.call();
+              sl<LoginProvider>().logout();
               return handler.reject(e);
             }
           }

@@ -12,35 +12,40 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: ColorPalette.primary.withValues(alpha: .2),
-      highlightColor: ColorPalette.primary.withValues(alpha: .2),
-      onTap: () => context.push(RouteConstants.orderDetails, extra: order),
-      child: Container(
-        color: ColorPalette.border,
-        padding: EdgeInsets.symmetric(vertical: Spacing.x2, horizontal: Spacing.x2),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(order.customerName, style: AppTextStyle.title()),
-                  const SizedBox(height: Spacing.half),
-                  Text(
-                    order.description,
-                    maxLines: 1,
-                    style: AppTextStyle.body(),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+    return Material(
+      borderRadius: BorderRadius.circular(16),
+      color: ColorPalette.primary.withValues(alpha: .1),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        customBorder: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        splashColor: ColorPalette.primary.withValues(alpha: .2),
+        highlightColor: ColorPalette.primary.withValues(alpha: .2),
+        onTap: () => context.push(RouteConstants.orderDetails, extra: order),
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: Spacing.x2, horizontal: Spacing.x2),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(order.customerName, style: AppTextStyle.title()),
+                    const SizedBox(height: Spacing.half),
+                    Text(
+                      order.description,
+                      maxLines: 1,
+                      style: AppTextStyle.body(),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(width: Spacing.x2),
-            OrderStatusWidget(isFinished: order.finished),
-            const SizedBox(width: Spacing.x2),
-            Icon(Icons.arrow_forward_ios, size: 16, color: ColorPalette.text),
-          ],
+              const SizedBox(width: Spacing.x2),
+              OrderStatusWidget(isFinished: order.finished),
+              const SizedBox(width: Spacing.x2),
+              Icon(Icons.arrow_forward_ios, size: 16, color: ColorPalette.text),
+            ],
+          ),
         ),
       ),
     );
