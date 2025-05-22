@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sw_flutter_carlos/core/routes/route_constants.dart';
 import 'package:sw_flutter_carlos/core/widgets/not_found_page.dart';
 import 'package:sw_flutter_carlos/features/auth/view/login_page.dart';
+import 'package:sw_flutter_carlos/features/orders/model/order_model.dart';
 import 'package:sw_flutter_carlos/features/orders/view/create_order_page.dart';
 import 'package:sw_flutter_carlos/features/orders/view/list_orders_page.dart';
 import 'package:sw_flutter_carlos/features/orders/view/order_details_page.dart';
@@ -14,7 +15,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: RouteConstants.orderDetails,
       builder: (context, state) {
-        final order = state.extra as String;
+        final order = state.extra as OrderModel;
         return OrderDetailsPage(order: order);
       },
     ),

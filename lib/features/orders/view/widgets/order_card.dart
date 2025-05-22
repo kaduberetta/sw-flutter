@@ -15,9 +15,9 @@ class OrderCard extends StatelessWidget {
     return InkWell(
       splashColor: ColorPalette.primary.withValues(alpha: .2),
       highlightColor: ColorPalette.primary.withValues(alpha: .2),
-      onTap: () => context.push(RouteConstants.orderDetails, extra: order.customerName),
+      onTap: () => context.push(RouteConstants.orderDetails, extra: order),
       child: Container(
-        color: ColorPalette.primary.withValues(alpha: .1),
+        color: ColorPalette.border,
         padding: EdgeInsets.symmetric(vertical: Spacing.x2, horizontal: Spacing.x2),
         child: Row(
           children: [

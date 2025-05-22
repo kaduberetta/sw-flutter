@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sw_flutter_carlos/core/config/auth_manager.dart';
 import 'package:sw_flutter_carlos/core/config/status_notifier.dart';
 import 'package:sw_flutter_carlos/core/exceptions/api_exception.dart';
 import 'package:sw_flutter_carlos/core/routes/route_constants.dart';
 import 'package:sw_flutter_carlos/features/auth/service/auth_service.dart';
 
 class LoginProvider extends ChangeNotifier with StatusNotifier {
+  final AuthService _authService;
+  LoginProvider(this._authService);
+
   String _email = '';
   String _password = '';
   bool _obscurePassword = true;
-  final AuthService _authService = AuthService();
 
   String get email => _email;
   String get password => _password;
@@ -46,6 +49,17 @@ class LoginProvider extends ChangeNotifier with StatusNotifier {
       setError(e.message);
     } catch (e) {
       setError('Erro inesperado: ${e.toString()}');
+    }
+  }
+
+  Future<void> logout(BuildContext context) async {
+    setLoading();
+    try {
+      await _authService.logout();
+      setSuccess();
+      AuthManager.onLogout?.call();
+    } catch (e) {
+      setError('Erro ao sair: ${e.toString()}');
     }
   }
 }

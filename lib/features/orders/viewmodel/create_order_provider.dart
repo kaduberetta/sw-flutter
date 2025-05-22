@@ -6,7 +6,8 @@ import 'package:sw_flutter_carlos/features/orders/viewmodel/list_orders_provider
 import 'package:sw_flutter_carlos/service_locator.dart';
 
 class CreateOrderProvider extends ChangeNotifier with StatusNotifier {
-  final OrdersService _ordersService = OrdersService();
+  final OrdersService _ordersService;
+  CreateOrderProvider(this._ordersService);
 
   String _customerName = '';
   String _description = '';

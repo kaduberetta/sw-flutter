@@ -38,7 +38,7 @@ class DefaultTextField extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         labelText: labelText,
-        hintStyle: AppTextStyle.bodySmall(color: ColorPalette.text.withValues(alpha: .6)),
+        hintStyle: AppTextStyle.bodySmall(color: ColorPalette.text),
         labelStyle: AppTextStyle.body(color: ColorPalette.text),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,

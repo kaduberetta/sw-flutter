@@ -4,11 +4,11 @@ import 'package:sw_flutter_carlos/features/orders/service/orders_service.dart';
 import 'package:sw_flutter_carlos/core/config/status_notifier.dart';
 
 class ListOrdersProvider extends ChangeNotifier with StatusNotifier {
-  ListOrdersProvider() {
+  ListOrdersProvider(this._ordersService) {
     fetchOrders();
   }
 
-  final OrdersService _ordersService = OrdersService();
+  final OrdersService _ordersService;
   List<OrderModel> _orders = [];
   List<OrderModel> get orders => _orders;
 

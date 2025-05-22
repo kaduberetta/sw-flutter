@@ -14,7 +14,7 @@ class ListOrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const DefaultAppBar(title: 'Meus Pedidos'),
+      appBar: const DefaultAppBar(title: 'Meus Pedidos', showLoggoutButton: true),
       body: SafeArea(
         child: Consumer<ListOrdersProvider>(
           builder: (context, provider, _) {
@@ -32,11 +32,14 @@ class ListOrdersPage extends StatelessWidget {
                   ),
                   const SizedBox(height: Spacing.x2),
                   Expanded(
-                    child: ListView.separated(
-                      itemCount: provider.orders.length,
-                      padding: EdgeInsets.zero,
-                      separatorBuilder: (context, index) => SizedBox(height: Spacing.x1),
-                      itemBuilder: (context, index) => OrderCard(order: provider.orders[index]),
+                    child: RefreshIndicator(
+                      onRefresh: provider.fetchOrders,
+                      child: ListView.separated(
+                        itemCount: provider.orders.length,
+                        padding: EdgeInsets.zero,
+                        separatorBuilder: (context, index) => SizedBox(height: Spacing.x1),
+                        itemBuilder: (context, index) => OrderCard(order: provider.orders[index]),
+                      ),
                     ),
                   ),
                 ],
