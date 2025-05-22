@@ -7,9 +7,21 @@ import 'package:sw_flutter_carlos/core/widgets/default_app_bar.dart';
 import 'package:sw_flutter_carlos/core/widgets/primary_button.dart';
 import 'package:sw_flutter_carlos/features/orders/view/widgets/order_card.dart';
 import 'package:sw_flutter_carlos/features/orders/viewmodel/list_orders_provider.dart';
+import 'package:sw_flutter_carlos/service_locator.dart';
 
-class ListOrdersPage extends StatelessWidget {
+class ListOrdersPage extends StatefulWidget {
   const ListOrdersPage({super.key});
+
+  @override
+  State<ListOrdersPage> createState() => _ListOrdersPageState();
+}
+
+class _ListOrdersPageState extends State<ListOrdersPage> {
+  @override
+  void initState() {
+    sl<ListOrdersProvider>().fetchOrders();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
