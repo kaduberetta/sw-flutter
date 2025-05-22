@@ -62,7 +62,7 @@ O projeto adota padrões modernos de arquitetura Flutter, com foco em separaçã
 ## Como Rodar o Projeto
 
 ### Pré-requisitos
-- Flutter instalado ([guia oficial](https://docs.flutter.dev/get-started/install))
+- Flutter instalado e atualizado ([guia oficial](https://docs.flutter.dev/get-started/install))
 - SDKs das plataformas desejadas (Android Studio, Xcode para iOS, Windows Desktop)
 - Emulador/simulador ou dispositivo físico
 
@@ -74,6 +74,7 @@ flutter run -d android
 > Certifique-se de ter um emulador Android rodando ou um dispositivo conectado.
 
 ### iOS
+Realizar configurações de signing no xcode
 ```bash
 flutter pub get
 flutter run -d ios
