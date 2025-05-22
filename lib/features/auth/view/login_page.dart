@@ -13,15 +13,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<LoginProvider>(
       builder: (context, provider, _) {
-        if (provider.hasError) {
-          // if (provider.hasError && provider.errorMessage != null) {
-          //   WidgetsBinding.instance.addPostFrameCallback((_) {
-          //     ScaffoldMessenger.of(
-          //       context,
-          //     ).showSnackBar(DefaultSnackBar.error(message: provider.errorMessage!));
-          //   });
-          // }
-        }
         return Scaffold(
           backgroundColor: ColorPalette.primary,
           body: SafeArea(
@@ -56,7 +47,14 @@ class LoginPage extends StatelessWidget {
                   PrimaryButton(
                     label: 'Entrar',
                     isLoading: provider.isLoading,
-                    onPressed: () => provider.login(context),
+                    onPressed: () async {
+                      final result = await provider.login(context);
+                      if (!result && context.mounted) {
+                        ScaffoldMessenger.of(
+                          context,
+                        ).showSnackBar(DefaultSnackBar.error(message: provider.errorMessage!));
+                      }
+                    },
                   ),
                 ],
               ),

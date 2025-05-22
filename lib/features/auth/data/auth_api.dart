@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:sw_flutter_carlos/core/config/dio_client.dart';
 import '../model/token_model.dart';
 
 class AuthApi {
   final _baseUrl = 'https://dev-techtest.swfast.com.br';
   final _clientId = 'user';
-  final Dio _dio = Dio();
+  final Dio _dio = DioClient.client;
 
   Future<TokenModel?> login(String username, String password) async {
     final url = '$_baseUrl/connect/token';
